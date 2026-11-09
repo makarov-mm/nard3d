@@ -1,0 +1,40 @@
+// The split-sum lookup table: the scale and bias that turn F0 into the reflected share of the environment.
+
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+layout(binding = 0, rg16f) uniform writeonly image2D uOutput;
+
+float GeometrySchlickGgx(float NoX, float roughness)
+{
+    float k = roughness * roughness / 2.0;
+    return NoX / (NoX * (1.0 - k) + k);
+}
+
+void main()
+{
+    ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 size = imageSize(uOutput);
+    if (texel.x >= size.x || texel.y >= size.y)
+        return;
+    float NoV = max((float(texel.x) + 0.5) / float(size.x), 1e-3);
+    float roughness = (float(texel.y) + 0.5) / float(size.y);
+    vec3 v = vec3(sqrt(1.0 - NoV * NoV), 0.0, NoV);
+
+    const uint Count = 1024u;
+    float scale = 0.0, bias = 0.0;
+    for (uint i = 0u; i < Count; ++i) {
+        vec3 h = ImportanceSampleGgx(Hammersley(i, Count), roughness);
+        vec3 l = normalize(2.0 * dot(v, h) * h - v);
+        float NoL = max(l.z, 0.0);
+        float NoH = max(h.z, 0.0);
+        float VoH = max(dot(v, h), 0.0);
+        if (NoL > 0.0) {
+            float g = GeometrySchlickGgx(NoV, roughness) * GeometrySchlickGgx(NoL, roughness);
+            float visibility = g * VoH / max(NoH * NoV, 1e-4);
+            float fresnel = pow(1.0 - VoH, 5.0);
+            scale += (1.0 - fresnel) * visibility;
+            bias += fresnel * visibility;
+        }
+    }
+    imageStore(uOutput, texel, vec4(scale / float(Count), bias / float(Count), 0.0, 0.0));
+}
