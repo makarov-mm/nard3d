@@ -1,0 +1,49 @@
+// The room: a backdrop graded from the floor to the ceiling, and the lamp over the table and the soft lights round it.
+
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+layout(binding = 0, rgba16f) uniform writeonly imageCube uOutput;
+
+uniform vec3 uCeiling;
+uniform vec3 uHorizon;
+uniform vec3 uFloor;
+uniform vec4 uPanelDirection[8]; // xyz toward the panel, w: roll
+uniform vec4 uPanelShape[8];     // half width, half height (as tangents), corner, softness
+uniform vec4 uPanelColor[8];     // rgb radiance, w: falloff from the center
+uniform int uPanelCount;
+
+float RoundedBox(vec2 p, vec2 halfSize, float radius)
+{
+    vec2 q = abs(p) - halfSize + radius;
+    return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+}
+
+vec3 Radiance(vec3 d)
+{
+    vec3 color = d.y > 0.0 ? mix(uHorizon, uCeiling, pow(d.y, 0.55)) : mix(uHorizon, uFloor, pow(-d.y, 0.35));
+    for (int i = 0; i < uPanelCount; ++i) {
+        vec3 center = normalize(uPanelDirection[i].xyz);
+        float facing = dot(d, center);
+        if (facing <= 0.05)
+            continue;
+        mat3 frame = TangentFrame(center);
+        vec2 q = vec2(dot(d, frame[0]), dot(d, frame[1])) / facing;
+        float roll = uPanelDirection[i].w;
+        q = mat2(cos(roll), sin(roll), -sin(roll), cos(roll)) * q;
+        vec4 shape = uPanelShape[i];
+        float sdf = RoundedBox(q, shape.xy, shape.z);
+        float mask = 1.0 - smoothstep(-shape.w, shape.w, sdf);
+        float falloff = 1.0 - uPanelColor[i].w * clamp(length(q / shape.xy) * 0.7, 0.0, 1.0);
+        color += uPanelColor[i].rgb * mask * falloff;
+    }
+    return color;
+}
+
+void main()
+{
+    ivec3 texel = ivec3(gl_GlobalInvocationID);
+    int size = imageSize(uOutput).x;
+    if (texel.x >= size || texel.y >= size)
+        return;
+    imageStore(uOutput, texel, vec4(Radiance(CubeDirection(texel, float(size))), 1.0));
+}

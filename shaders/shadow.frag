@@ -1,0 +1,5 @@
+// Depth only.
+
+void main()
+{
+}

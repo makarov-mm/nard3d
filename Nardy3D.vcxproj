@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{BA98BA6F-DF73-5795-91D0-BAB1E4B18D30}</ProjectGuid>
+    <RootNamespace>Nardy3D</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus /constexpr:steps10000000 %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_WINDOWS;WIN32_LEAN_AND_MEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- The C++ runtime built in, so the game runs without the Visual C++ Redistributable. -->
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Ai.cpp" />
+    <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\BoardModel.cpp" />
+    <ClCompile Include="src\BoardView.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Gl.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Nardy.cpp" />
+    <ClCompile Include="src\Network.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Resources.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\Sound.cpp" />
+    <ClCompile Include="src\Strings.cpp" />
+    <ClCompile Include="src\Text.cpp" />
+    <ClCompile Include="src\Themes.cpp" />
+    <ClCompile Include="src\UiPainter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Ai.h" />
+    <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\BoardModel.h" />
+    <ClInclude Include="src\BoardView.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Gl.h" />
+    <ClInclude Include="src\MathTypes.h" />
+    <ClInclude Include="src\Nardy.h" />
+    <ClInclude Include="src\Network.h" />
+    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Resources.h" />
+    <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\Sound.h" />
+    <ClInclude Include="src\Strings.h" />
+    <ClInclude Include="src\Text.h" />
+    <ClInclude Include="src\Themes.h" />
+    <ClInclude Include="src\UiPainter.h" />
+    <ClInclude Include="src\Win32.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Nardy3D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\Nardy3D.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="assets\long.net" />
+    <None Include="assets\short.net" />
+    <None Include="shaders\background.frag" />
+    <None Include="shaders\bloom_down.frag" />
+    <None Include="shaders\bloom_up.frag" />
+    <None Include="shaders\board.frag" />
+    <None Include="shaders\board.vert" />
+    <None Include="shaders\brdf.comp" />
+    <None Include="shaders\common.glsl" />
+    <None Include="shaders\composite.frag" />
+    <None Include="shaders\environment.comp" />
+    <None Include="shaders\fullscreen.vert" />
+    <None Include="shaders\ibl_common.glsl" />
+    <None Include="shaders\irradiance.comp" />
+    <None Include="shaders\lighting.glsl" />
+    <None Include="shaders\piece.frag" />
+    <None Include="shaders\piece.vert" />
+    <None Include="shaders\prefilter.comp" />
+    <None Include="shaders\resolve.frag" />
+    <None Include="shaders\shadow.frag" />
+    <None Include="shaders\shadow.vert" />
+    <None Include="shaders\ui.frag" />
+    <None Include="shaders\ui.vert" />
+    <None Include="tools\Train.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

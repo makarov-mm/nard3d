@@ -1,0 +1,55 @@
+// The icon, the version information, the shaders and the computer player's networks, built into the executable.
+
+#include <windows.h>
+
+1 ICON "assets/Nardy3D.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Mykhailo Makarov"
+            VALUE "FileDescription", "3D Nardy"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "Nardy3D"
+            VALUE "LegalCopyright", "Copyright (c) 2026 Mykhailo Makarov. MIT License."
+            VALUE "OriginalFilename", "Nardy3D.exe"
+            VALUE "ProductName", "3D Nardy"
+            VALUE "ProductVersion", "1.0.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+BACKGROUND_FRAG RCDATA "shaders/background.frag"
+BLOOM_DOWN_FRAG RCDATA "shaders/bloom_down.frag"
+BLOOM_UP_FRAG RCDATA "shaders/bloom_up.frag"
+BOARD_FRAG RCDATA "shaders/board.frag"
+BOARD_VERT RCDATA "shaders/board.vert"
+BRDF_COMP RCDATA "shaders/brdf.comp"
+COMMON_GLSL RCDATA "shaders/common.glsl"
+COMPOSITE_FRAG RCDATA "shaders/composite.frag"
+ENVIRONMENT_COMP RCDATA "shaders/environment.comp"
+FULLSCREEN_VERT RCDATA "shaders/fullscreen.vert"
+IBL_COMMON_GLSL RCDATA "shaders/ibl_common.glsl"
+IRRADIANCE_COMP RCDATA "shaders/irradiance.comp"
+LIGHTING_GLSL RCDATA "shaders/lighting.glsl"
+LONG_NET RCDATA "assets/long.net"
+PIECE_FRAG RCDATA "shaders/piece.frag"
+PIECE_VERT RCDATA "shaders/piece.vert"
+PREFILTER_COMP RCDATA "shaders/prefilter.comp"
+RESOLVE_FRAG RCDATA "shaders/resolve.frag"
+SHADOW_FRAG RCDATA "shaders/shadow.frag"
+SHADOW_VERT RCDATA "shaders/shadow.vert"
+SHORT_NET RCDATA "assets/short.net"
+UI_FRAG RCDATA "shaders/ui.frag"
+UI_VERT RCDATA "shaders/ui.vert"
